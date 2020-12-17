@@ -1,5 +1,5 @@
 <?php
-$config_name = "SchoolAdmin";
+$config_name = "IDK8 ";
 
 
 #Language Strings
