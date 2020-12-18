@@ -21,7 +21,7 @@ $navbar = <<<EOT
 
 <div class="uk-navbar-left ">
 
-    <ul class="uk-navbar-nav ">
+    <ul class="uk-navbar-nav">
         <a class="uk-navbar-item uk-logo " href="/">$config_name</a>
     </ul>
 </div>

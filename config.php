@@ -1,6 +1,6 @@
 <?php
 session_start();
-$config_name = "IDK8 ";
+$config_name = "Komischer Name hier einsetzen";
 
 #MySQL
 $config_mysql_user = "root";
@@ -30,4 +30,4 @@ $config_login_success = "Logged in successfully, redirecting...";
 $config_login_wrong = "Wrong username or password.";
 $config_register_success = "Registration successful. You are now logged in.";
 $config_register_exists = "Username already exists.";
-$config_register_password = "Passwords don't match."
+$config_register_password = "Passwords don't match.";
