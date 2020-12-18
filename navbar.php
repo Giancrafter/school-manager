@@ -1,6 +1,11 @@
 <?php
-$uri = $_SERVER['REQUEST_URI'];
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: login.php');
+	exit;
+}
 
+$uri = $_SERVER['REQUEST_URI'];
+$username = $_SESSION['username'];
 if(stristr($uri, "marks.php")){
     $m_a="active";
 } else if(stristr($uri, "exams.php")) {
@@ -22,11 +27,11 @@ $navbar = <<<EOT
 </div>
 <div class="uk-navbar-right">
  <ul class="uk-navbar-nav uk-visible@s">
-        <li class=" $m_a "><a href="marks.php">$config_marks</a></li>
-        <li class=" $m_e "><a href="exams.php">$config_exams</a></li>
-        <li class=" $m_o "><a href="other.php">$config_other</a></li>
-        <li class=" $m_p "><a href="profile.php">$config_profile</a></li>
-        <li><a href="logout.php">$config_logout</a></li>
+        <li class=" $m_a "><a href="marks.php"><span uk-icon="icon: list"></span>&nbsp;$config_marks</a></li>
+        <li class=" $m_e "><a href="exams.php"><span uk-icon="icon: file-edit"></span>&nbsp;$config_exams</a></li>
+        <li class=" $m_o "><a href="other.php"><span uk-icon="icon: world"></span>&nbsp;$config_other</a></li>
+        <li class=" $m_p "><a href="profile.php"><span uk-icon="icon: user"></span>&nbsp;$username</a></li>
+        <li><a href="logout.php" style="color:red;"><span uk-icon="icon: sign-out"></span>&nbsp;$config_logout</a></li>
         </ul>
         <a href="#" class="uk-navbar-toggle uk-hidden@s" uk-navbar-toggle-icon uk-toggle="target: #sidenav"></a>
 </div>
@@ -39,34 +44,34 @@ $navbar = <<<EOT
         <li>
             <a href="marks.php" class=" $m_a ">
             <span uk-icon="icon: list"></span>
-                $config_marks
+                &nbsp;$config_marks
             </a>
         </li>
 
         <li>
             <a href="exams.php" class=" $m_e ">
                 <span uk-icon="icon: file-edit"></span>
-                $config_exams
+                &nbsp; $config_exams
             </a>
         </li>
 
         <li>
             <a href="other.php" class=" $m_o ">
                 <span uk-icon="icon: world"></span>
-                $config_other
+                &nbsp;$config_other
             </a>
         </li>
 
         <li>
             <a href="profile.php" class=" $m_p ">
                 <span uk-icon="icon: user"></span>
-                $config_profile
+                &nbsp;$username
             </a>
         </li>
         <li>
             <a href="logout.php" style="color:red;">
                 <span uk-icon="icon: sign-out"></span>
-                $config_logout
+                &nbsp;$config_logout
             </a>
         </li>
 </ul>
