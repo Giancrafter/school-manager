@@ -12,7 +12,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['password
     if ($password!=$password_re) {
         //Passwords don't match
         $data['success'] = false;
-        $data['error']  = $config_register_password;
+        $data['error']  = $lang['register_password'];
     } else {
     if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) {
         // Bind parameters (s = string, i = int, b = blob, etc)
@@ -23,7 +23,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['password
         if ($stmt->num_rows > 0) {
         // Username already exists
         $data['success'] = false;
-        $data['error']  = $config_register_exists;
+        $data['error']  = $lang['register_exists'];
         } else {
         // Username doesnt exists, insert new account
         if ($stmt = $con->prepare('INSERT INTO users (username, password) VALUES (?, ?)')) {
@@ -37,7 +37,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['password
             $_SESSION['id'] = $conn->insert_id;
             //User created
             $data['success'] = true;
-            $data['message'] = $config_register_success;
+            $data['message'] = $lang['register_success'];
 }}}}
 echo json_encode($data);
 die();
@@ -71,26 +71,26 @@ die();
                                 <div class="uk-margin">
                                     <div class="uk-inline uk-width-1-1">
                                         <span class="uk-form-icon" uk-icon="icon: user"></span>
-                                        <input class="uk-input uk-form-large" placeholder="<?=$config_user?>" type="text" required="required" name="username">
+                                        <input class="uk-input uk-form-large" placeholder="<?=$lang['user']?>" type="text" required="required" name="username">
                                     </div>
                                 </div>
                                 <div class="uk-margin">
                                     <div class="uk-inline uk-width-1-1">
                                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                        <input class="uk-input uk-form-large" placeholder="<?=$config_password?>" type="password" required="required" name="password">	
+                                        <input class="uk-input uk-form-large" placeholder="<?=$lang['password']?>" type="password" required="required" name="password">	
                                     </div>
                                 </div>
                                 <div class="uk-margin">
                                     <div class="uk-inline uk-width-1-1">
                                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                        <input class="uk-input uk-form-large" placeholder="<?=$config_repeat_password?>" type="password" required="required" name="password_re">	
+                                        <input class="uk-input uk-form-large" placeholder="<?=$lang['repeat_password']?>" type="password" required="required" name="password_re">	
                                     </div>
                                 </div>
                                 <div class="uk-margin">
-                                    <input type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1" value="<?=$config_register?>" name="register"></input>
+                                    <input type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1" value="<?=$lang['register']?>" name="register"></input>
                                 </div>
                                 <div class="uk-text-small uk-text-center">
-                                    <?=$config_already_registered?> <a href="login.php"><?=$config_login?></a>
+                                    <?=$config_already_registered?> <a href="login.php"><?=$lang['already_registered']?></a>
                                 </div>
                             </form>
                         </div>

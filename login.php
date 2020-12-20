@@ -28,18 +28,18 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
               $_SESSION['username'] = $_POST['username'];
               $_SESSION['id'] = $id;
               $data['success'] = true;
-              $data['message'] = 'Logged in successfully, redirecting...';
+              $data['message'] = $lang['login_success'];
             
           } else {
                 //Wrong username or password
                 $data['success'] = false;
-                $data['error']  = $config_login_wrong;
+                $data['error']  = $lang['login_wrong'];
 
           }
       } else {
             //Wrong username or password
             $data['success'] = false;
-            $data['error']  = $config_login_wrong;
+            $data['error']  = $lang['login_wrong'];
     
         $stmt->close();
       }
@@ -78,20 +78,20 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
                                 <div class="uk-margin">
                                     <div class="uk-inline uk-width-1-1">
                                         <span class="uk-form-icon" uk-icon="icon: user"></span>
-                                        <input class="uk-input uk-form-large" placeholder="<?=$config_user?>" type="text" name="username">
+                                        <input class="uk-input uk-form-large" placeholder="<?=$lang['user']?>" type="text" name="username">
                                     </div>
                                 </div>
                                 <div class="uk-margin">
                                     <div class="uk-inline uk-width-1-1">
                                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                        <input class="uk-input uk-form-large" placeholder="<?=$config_password?>" type="password" name="password">	
+                                        <input class="uk-input uk-form-large" placeholder="<?=$lang['password']?>" type="password" name="password">	
                                     </div>
                                 </div>
                                 <div class="uk-margin">
-                                    <input type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1" value="<?=$config_login?>" name="login"></input>
+                                    <input type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1" value="<?=$lang['login']?>" name="login"></input>
                                 </div>
                                 <div class="uk-text-small uk-text-center">
-                                    <?=$config_not_registered?> <a href="register.php"><?=$config_create_account?></a>
+                                    <?=$lang['not_registered']?> <a href="register.php"><?=$lang['create_account']?></a>
                                 </div>
                             </form>
                         </div>

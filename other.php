@@ -8,7 +8,7 @@
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
-    <title><?=$config_name?> | <?=$config_home?></title>
+    <title><?=$config_name?> | <?=$lang['other']?></title>
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body>

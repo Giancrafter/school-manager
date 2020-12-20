@@ -27,11 +27,11 @@ $navbar = <<<EOT
 </div>
 <div class="uk-navbar-right">
  <ul class="uk-navbar-nav uk-visible@s">
-        <li class=" $m_a "><a href="marks.php"><span uk-icon="icon: list"></span>&nbsp;$config_marks</a></li>
-        <li class=" $m_e "><a href="exams.php"><span uk-icon="icon: file-edit"></span>&nbsp;$config_exams</a></li>
-        <li class=" $m_o "><a href="other.php"><span uk-icon="icon: world"></span>&nbsp;$config_other</a></li>
+        <li class=" $m_a "><a href="marks.php"><span uk-icon="icon: list"></span>&nbsp;{$lang['marks']}</a></li>
+        <li class=" $m_e "><a href="exams.php"><span uk-icon="icon: file-edit"></span>&nbsp;{$lang['exams']}</a></li>
+        <li class=" $m_o "><a href="other.php"><span uk-icon="icon: world"></span>&nbsp;{$lang['other']}r</a></li>
         <li class=" $m_p "><a href="profile.php"><span uk-icon="icon: user"></span>&nbsp;$username</a></li>
-        <li><a href="logout.php" style="color:red;"><span uk-icon="icon: sign-out"></span>&nbsp;$config_logout</a></li>
+        <li><a href="logout.php" style="color:red;"><span uk-icon="icon: sign-out"></span>&nbsp;{$lang['logout']}</a></li>
         </ul>
         <a href="#" class="uk-navbar-toggle uk-hidden@s" uk-navbar-toggle-icon uk-toggle="target: #sidenav"></a>
 </div>
@@ -44,21 +44,21 @@ $navbar = <<<EOT
         <li>
             <a href="marks.php" class=" $m_a ">
             <span uk-icon="icon: list"></span>
-                &nbsp;$config_marks
+                &nbsp;{$lang['marks']}
             </a>
         </li>
 
         <li>
             <a href="exams.php" class=" $m_e ">
                 <span uk-icon="icon: file-edit"></span>
-                &nbsp; $config_exams
+                &nbsp; {$lang['exams']}
             </a>
         </li>
 
         <li>
             <a href="other.php" class=" $m_o ">
                 <span uk-icon="icon: world"></span>
-                &nbsp;$config_other
+                &nbsp;{$lang['other']}
             </a>
         </li>
 
@@ -71,7 +71,7 @@ $navbar = <<<EOT
         <li>
             <a href="logout.php" style="color:red;">
                 <span uk-icon="icon: sign-out"></span>
-                &nbsp;$config_logout
+                &nbsp;{$lang['logout']}
             </a>
         </li>
 </ul>
