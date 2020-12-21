@@ -29,7 +29,7 @@ $navbar = <<<EOT
  <ul class="uk-navbar-nav uk-visible@s">
         <li class=" $m_a "><a href="marks.php"><span uk-icon="icon: list"></span>&nbsp;{$lang['marks']}</a></li>
         <li class=" $m_e "><a href="exams.php"><span uk-icon="icon: file-edit"></span>&nbsp;{$lang['exams']}</a></li>
-        <li class=" $m_o "><a href="other.php"><span uk-icon="icon: world"></span>&nbsp;{$lang['other']}r</a></li>
+        <li class=" $m_o "><a href="other.php"><span uk-icon="icon: world"></span>&nbsp;{$lang['other']}</a></li>
         <li class=" $m_p "><a href="profile.php"><span uk-icon="icon: user"></span>&nbsp;$username</a></li>
         <li><a href="logout.php" style="color:red;"><span uk-icon="icon: sign-out"></span>&nbsp;{$lang['logout']}</a></li>
         </ul>
