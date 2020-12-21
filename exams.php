@@ -1,4 +1,31 @@
-<?php include("config.php"); include("navbar.php") ?>
+<?php 
+include("config.php"); 
+include("db_connect.php");
+include("navbar.php");
+include("scripts/Parsedown.php");
+if ($stmt = $con->prepare('SELECT id, name, subject, description, date FROM exams WHERE class = ? ORDER BY id DESC')) {
+    $stmt->bind_param('s', $_SESSION['class']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $exams = "";
+while($row = $result->fetch_assoc()) {
+    $Parsedown = new Parsedown();
+    $row['description'] = $Parsedown->text(htmlspecialchars ($row['description']));
+    $exams.= <<<EOT
+        <article class="uk-article">
+        <h1 class="uk-article-title"><a class="uk-link-reset" href="">{$row['name']}</a></h1>
+        <p class="uk-text-lead">{$row['subject']}</p>
+        <p>{$row['date']}</p>
+        <p>
+            {$row['description']}
+        </p>
+        </article>
+        <hr />
+        <br />
+    EOT;
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,25 +42,16 @@
     <?=$navbar?>
     <main class="uk-padding uk-animation-fade" >
     <div class="uk-margin">
-    <article class="uk-article">
-
-    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Exam 1</a></h1>
-
-    <p class="uk-text-lead">Maths</p>
-    <p>01.01.2000</p>
-
-
-    <p>
-        <ul>
-            <li>thing 1</li>
-            <li>thing 2</li>
-            <li>thing 3</li>
-        </ul>
-    </p>
-
-    </article>
-    <hr />
+    <?=$exams?>
 </div>
 </main>
+<div id="add-exam" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Add exam</h2>
+        <button class="uk-button uk-button-secondary" type="button">Save</button>
+        <button class="uk-modal-close uk-button uk-button-secondary" type="button">Close</button>
+    </div>
+</div>
+<button uk-toggle="target: #add-exam" type="button" class="uk-button uk-button-secondary" style="position: fixed;  bottom:40px; right:40px; border-radius:50px;"><span uk-icon="icon: plus"></span></button>
 </body>
 </html>
