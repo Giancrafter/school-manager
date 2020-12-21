@@ -9,14 +9,14 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
     $username = $con->real_escape_string($_POST['username']);
     $password = $con->real_escape_string($_POST['password']);
 
-    if ($stmt = $con->prepare('SELECT id, password FROM users WHERE username = ?')) {
+    if ($stmt = $con->prepare('SELECT id, password, class FROM users WHERE username = ?')) {
         // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
         $stmt->bind_param('s', $username);
         $stmt->execute();
         // Store the result so we can check if the account exists in the database.
         $stmt->store_result();
       if ($stmt->num_rows > 0) {
-          $stmt->bind_result($id, $password_db);
+          $stmt->bind_result($id, $password_db, $_SESSION['class']);
           $stmt->fetch();
           // Account exists, now we verify the password.
           // Note: remewmber to use password_hash in your registration file to store the hashed passwords.
