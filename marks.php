@@ -1,4 +1,7 @@
-<?php include("config.php"); include("navbar.php") ?>
+<?php 
+include("config.php"); 
+include("navbar.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
