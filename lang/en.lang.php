@@ -29,4 +29,8 @@ $lang['points'] = "Points";
 $lang['semestre'] = "Semester";
 $lang['bad_marks'] = "Insufficient marks";
 $lang['mark_history'] = "Mark history";
+
+$lang['save'] = 'Save';
+$lang['class'] = 'Class';
+$lang['account-change'] = 'If you want to change any of these settings, please contant an administrator.';
 ?>

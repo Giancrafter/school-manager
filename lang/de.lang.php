@@ -29,4 +29,8 @@ $lang['points'] = "Punkte";
 $lang['semestre'] = "Semester";
 $lang['bad_marks'] = "Ungenügende Noten";
 $lang['mark_history'] = "Notenverlauf";
+
+$lang['save'] = 'Speichern';
+$lang['class'] = 'Klasse';
+$lang['account-change'] = 'Falls du diese Einstellungen bearbeiten willst, kontaktiere einen Administrator.';
 ?>

@@ -1,4 +1,12 @@
-<?php include("config.php"); include("navbar.php") ?>
+ <?php 
+ include("config.php"); 
+ include("navbar.php");
+ $langs = "";
+ foreach ($languages as $row) {
+    $langs .= "<option name=\"{$row[0]}\">{$row[1]}</option>";
+  }
+ 
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,34 +23,29 @@
     <?=$navbar?>
     <main class="uk-padding uk-animation-fade" >
     <div class="uk-margin">
-    <form>
         <fieldset class="uk-fieldset">
 
             <legend class="uk-legend">Account</legend>
 
             <div class="uk-margin">
-                <label for="">Username: </label>
-                <input class="uk-input" type="text" placeholder="Username">
+                <b><?=$lang['user']?></b>:  <?=$_SESSION['username']?></b><br />
+                <b><?=$lang['class']?></b>:  <?=$_SESSION['class']?></b><br /><br />
+                <i style="font-size: 0.75em;"><?=$lang['account-change']?></i>
             </div>
-
-            <div class="uk-margin">
-            <label for="">Select class:</label>
-                <select class="uk-select">
-                    <option>Class A</option>
-                    <option>Class B</option>
-                </select>
-            </div>
+            
+            <hr>
+            <form id="lang"> 
             <div class="uk-margin">
             <label for="">Select language:</label>
-                <select class="uk-select">
-                    <option>English</option>
-                    <option>Deutsch</option>
+                <select name="language" class="uk-select">
+                <?=$langs?>
                 </select>
             </div>
+            <button class="uk-button uk-button-secondary"><?=$lang['save']?></button>
+            </form>
  
 
         </fieldset>
-    </form>
     </div>
     </main>
 
