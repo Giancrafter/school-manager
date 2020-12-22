@@ -1,4 +1,23 @@
-<?php include("config.php"); include("navbar.php") ?>
+<?php 
+include("config.php"); 
+include("db_connect.php");
+include("navbar.php");
+if ($stmt = $con->prepare('SELECT id, name, subject, date FROM exams WHERE class = ? ORDER BY id DESC')) {
+    $stmt->bind_param('s', $_SESSION['class']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $exams = "";
+while($row = $result->fetch_assoc()) {
+    $exams.= <<<EOT
+        <tr>
+        <td><b>{$row['subject']}</b><br>
+        {$row['name']}</td>
+        <td>{$row['date']}</td>
+    </tr>
+    EOT;
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,21 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><b>Mathematik</b><br>
-                            Binomische Formeln</td>
-                            <td>21.03.2021</td>
-                        </tr>
-                        <tr>
-                            <td><b>Naturwissenschaften</b><br>
-                            Schroedingers Katze</td>
-                            <td>01.04.2021</td>
-                        </tr>
-                        <tr>
-                            <td><b>Englisch</b><br>
-                            Wörter</td>
-                            <td>12.05.2021</td>
-                        </tr>
+                        <?=$exams?>
                     </tbody>
                 </table>
                 </div>
