@@ -56,7 +56,7 @@ die();
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/script.js"></script>
-    <title><?=$config_name?> | <?=$config_register?></title>
+    <title><?=$config_name?> | <?=$lang['register']?></title>
 </head>
 <body>
     <div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport>
