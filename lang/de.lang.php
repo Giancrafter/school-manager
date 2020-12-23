@@ -33,4 +33,6 @@ $lang['mark_history'] = "Notenverlauf";
 $lang['save'] = 'Speichern';
 $lang['class'] = 'Klasse';
 $lang['account-change'] = 'Falls du diese Einstellungen bearbeiten willst, kontaktiere einen Administrator.';
+$lang['language_change_success'] = "Sprache erfolgreich geändert.";
+$lang['language_not_found'] = "Sprache nicht gefunden";
 ?>

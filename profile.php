@@ -1,11 +1,31 @@
  <?php 
  include("config.php"); 
  include("navbar.php");
+ include("db_connect.php");
+
+
  $langs = "";
  foreach ($languages as $row) {
-    $langs .= "<option name=\"{$row[0]}\">{$row[1]}</option>";
+    if($_SESSION['language'] == $row[0]){$s="selected";}else{$s="";}
+    $langs .= "<option value=\"{$row[0]}\" {$s}>{$row[1]}</option>";
   }
- 
+ if (isset($_POST['language'])) {
+    $data = array();
+    $new_language = $con->real_escape_string($_POST['language']);
+    if (in_array($new_language, $available_lang)) {
+        $stmt = $con->prepare("UPDATE users SET language = ? WHERE username = ?");
+        $stmt->bind_param("ss", $new_language, $_SESSION['username']);
+        $stmt->execute();
+        $data['success'] = true;
+        $data['message'] = $lang['language_change_success'];
+    } else {
+        $data['success'] = false;
+        $data['error']  = $lang['language_not_found'];
+    }
+    $_SESSION['language'] = $new_language;
+    echo json_encode($data);
+    die();
+ }
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +36,7 @@
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="js/script.js"></script>
     <title><?=$config_name?> | <?=$lang['profile']?></title>
     <link rel="stylesheet" href="css/navbar.css">
 </head>

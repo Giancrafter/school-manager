@@ -3,11 +3,12 @@ $languages = array (
     array("de","Deutsch"),
     array("en","English"),
   );
-if (!isset($_SESSION['lang'])){
+$available_lang = ['de', 'en']; 
+if (!isset($_SESSION['language'])){
     $language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-    $acceptLang = ['de', 'en']; 
-    $language = in_array($language, $acceptLang) ? $language : 'en';
+    $language = in_array($language, $available_lang) ? $language : 'en';
     include("lang/{$language}.lang.php"); 
-
+} else {
+  include("lang/{$_SESSION['language']}.lang.php");
 }
 ?>
