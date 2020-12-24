@@ -35,4 +35,6 @@ $lang['class'] = 'Class';
 $lang['account-change'] = 'If you want to change any of these settings, please contant an administrator.';
 $lang['language_change_success'] = "Language changed successfully.";
 $lang['language_not_found'] = "Language not found";
+
+$lang['markdown-notice'] = "This description can be formatted using Markdown."
 ?>
