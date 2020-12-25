@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body>
-    <?=$navbar?>
+    <?=$navbar?><br><br><br>
+    <h1 style="text-align:center;font-size:6vw;"><b>SOON<sup>TM</sup></b></h1>
 </body>
 </html>
