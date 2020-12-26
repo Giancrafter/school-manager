@@ -7,6 +7,7 @@ if ($stmt = $con->prepare('SELECT id, name, subject, date FROM exams WHERE class
     $stmt->execute();
     $result = $stmt->get_result();
     $exams = "";
+    $stmt->close();
 while($row = $result->fetch_assoc()) {
     $exams.= <<<EOT
         <tr>
@@ -17,6 +18,29 @@ while($row = $result->fetch_assoc()) {
     EOT;
 }
 }
+$stmt = $con->prepare("SELECT * FROM marks WHERE username = ?");
+$stmt->bind_param("s", $_SESSION['username']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+$average_total=0;
+$average_count=0;
+$points=0;
+$insufficient=0;
+
+while($row = $result->fetch_assoc()) {
+//Points
+$points += round(($row["mark"]-4)*2)/2;
+
+//Insufficient Marks
+if($row["mark"]<4.0){$insufficient++;}
+
+//Average
+$average_count++;
+$average_total+=$row["mark"];
+}
+$average=round($average_total/$average_count,2);
+$avg_color = ($average<4.0) ? "red" : "grey";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,13 +80,13 @@ while($row = $result->fetch_assoc()) {
         <div>
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title"><?=$lang['mark_average']?></h3>
-                <h1 style="font-size:5em; color:red;">3.95</h1>
+                <h1 style="font-size:5em; color:<?=$avg_color?>;"><?=$average?></h1>
             </div>
         </div>
         <div>
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title"><?=$lang['points']?></h3>
-                <h1 style="font-size:5em; color:grey;">-1.5</h1>
+                <h1 style="font-size:5em; color:grey;"><?=$points?></h1>
             </div>
         </div>
         <div>
@@ -75,7 +99,7 @@ while($row = $result->fetch_assoc()) {
         <div>
             <div class="uk-card uk-card-default uk-card-body">
                 <h3 class="uk-card-title"><?=$lang['bad_marks']?></h3>
-                <h1 style="font-size:5em; color:grey;">2</h1>
+                <h1 style="font-size:5em; color:grey;"><?=$insufficient?></h1>
             </div>
         </div>
         <div>
