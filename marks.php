@@ -5,7 +5,7 @@ include("db_connect.php");
 
 //Function for getting Rank
 function getRank($g_array, $g_value){
-$g_array = arsort($g_array);
+arsort($g_array);
 $position=0;
 while ($g_value <= $g_array[$position]) {
     $position++;
@@ -17,6 +17,7 @@ if ( isset( $_POST["exam"]) && isset( $_POST["mark"])) {
     $post_exam = $con->real_escape_string($_POST['exam']);
     $post_mark = $con->real_escape_string($_POST['mark']);
     $post_subject = $con->real_escape_string($_POST['subject']);
+    //Default weight
     $weight=1.0;
     $sql_add = $con->prepare("SELECT * FROM exams WHERE name = ? AND subject = ?");
     $sql_add->bind_param("ss", $post_exam, $post_subject);
@@ -38,8 +39,11 @@ if ( isset( $_POST["exam"]) && isset( $_POST["mark"])) {
 $sql_subject_select = $con->prepare("SELECT name FROM subjects");
 $sql_subject_select->execute();
 $result = $sql_subject_select->get_result();
+$sql_subject_select->close();
 $marks="";
 //Loop through all Subjects
+
+
 while($row = $result->fetch_assoc()) {
     //Set Select and Mark variables
     $add_select = "";
@@ -48,10 +52,12 @@ while($row = $result->fetch_assoc()) {
     $avg_count=0;
     $avg=0;
     //Get a list of all exams
-    $sql_exam_select = $con->prepare("SELECT * FROM exams WHERE subject = ?");
-    $sql_exam_select->bind_param("s", $row["name"]);
+    
+    $sql_exam_select = $con->prepare("SELECT name FROM exams WHERE subject = ? AND class = ?");
+    $sql_exam_select->bind_param("ss", $row["name"], $_SESSION["class"]);
     $sql_exam_select->execute();
     $exam_list = $sql_exam_select->get_result();
+    $sql_exam_select->close();
     //Loop through exams
     while($exam_single = $exam_list->fetch_assoc()) {
         //SELECT all exams that marks exist for
@@ -65,22 +71,21 @@ while($row = $result->fetch_assoc()) {
             $avg+=$result_exams["mark"];
             $class_count=1;
             $class_marks=$result_exams["mark"];
-            //$ranking[] = array();
-
+            $ranking = array();
+            $s_subject = $row["name"];
             $sql_class = $con->prepare("SELECT mark FROM marks WHERE class = ? AND exam = ? AND subject  = ? AND username <> ?");
-            $sql_class->bind_param("ssss", $_SESSION["class"], $result_exams["exam"], $row["name"], $_SESSION["username"]);
-            //$sql_class->execute();
-
-            //$sql_class->bind_result($class_list);
-            //echo $class_list;
-            //$sql_class->fetch();
-            //for($class_element=0; $class_element <= count($class_list); $class_element++){
-            //    $class_count++;
-            //    $class_marks+=$class_list[$class_element]["mark"];
-            //    array_push($ranking, $class_list[$class_element]["mark"]);
-            //}
-           //$class_avg = $class_marks/$class_count;
-            //$pos_in_class=getRank($ranking, $result_exams["mark"]);
+            $sql_class->bind_param("ssss", $_SESSION["class"], $exam_single["name"], $s_subject, $_SESSION["username"]);
+            $sql_class->execute();
+            $sql_class_result=$sql_class->get_result();
+            while($class_element = $sql_class_result->fetch_assoc()){
+                $class_count++;
+                $class_marks+=$class_element["mark"];
+                $ranking[] = $class_element["mark"];
+            }
+            
+            $class_avg = round($class_marks/$class_count, 2);
+            $pos_in_class=getRank($ranking, $result_exams["mark"]);
+            $sql_class->close();
             $mark_table .= <<< EOT
                 <tr> 
                     <td>{$result_exams["exam"]}</td>
@@ -90,12 +95,13 @@ while($row = $result->fetch_assoc()) {
                 </tr>
             EOT;
         } else {
+            
             $add_select .= "<option value=\"{$exam_single["name"]}\">{$exam_single["name"]}</option>";
         }
         
         }
 
-    $avg_final=($avg_count>0) ? ($avg/$avg_count) : ("?");
+    $avg_final=($avg_count>0) ? (round($avg/$avg_count, 2)) : ("?");
     $mark_table=($mark_table!="") ? ($mark_table) : ("<td colspan=\"4\"><i>No marks set yet.</i></td>");
     $marks.= <<< EOT
     <li>
@@ -159,6 +165,7 @@ while($row = $result->fetch_assoc()) {
     </div>
     </li>
     EOT;
+
 }
 ?>
 <!DOCTYPE html>
