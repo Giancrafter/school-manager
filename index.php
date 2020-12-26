@@ -2,7 +2,7 @@
 include("config.php"); 
 include("db_connect.php");
 include("navbar.php");
-if ($stmt = $con->prepare('SELECT id, name, subject, date FROM exams WHERE class = ? ORDER BY id DESC')) {
+if ($stmt = $con->prepare('SELECT id, name, subject, date FROM exams WHERE class = ? ORDER BY id DESC LIMIT 3')) {
     $stmt->bind_param('s', $_SESSION['class']);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,7 +27,8 @@ $average_total=0;
 $average_count=0;
 $points=0;
 $insufficient=0;
-
+$dia_labels = "";
+$dia_data = "";
 while($row = $result->fetch_assoc()) {
 //Points
 $points += round(($row["mark"]-4)*2)/2;
@@ -38,6 +39,10 @@ if($row["mark"]<4.0){$insufficient++;}
 //Average
 $average_count++;
 $average_total+=$row["mark"];
+
+//Diagram stuff
+$dia_labels.="'{$row["exam"]}', ";
+$dia_data.="'{$row["mark"]}', ";
 }
 $average=round($average_total/$average_count,2);
 $avg_color = ($average<4.0) ? "red" : "grey";
@@ -112,10 +117,10 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ['Binomische Formeln', 'Chemie Test 2', 'Französisch Habitat', 'Französisch mündlich', 'Englisch Stories', 'Deutsch Aufsatz'],
+        labels: [<?=$dia_labels?>],
         datasets: [{
             label: 'Note',
-            data: [1.9, 3.8, 2.8, 3.9, 4.8, 6]
+            data: [<?=$dia_data?>]
         }]
     },
     options: {

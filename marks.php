@@ -25,9 +25,10 @@ if ( isset( $_POST["exam"]) && isset( $_POST["mark"])) {
     $sql_add->store_result();
     if ($sql_add->num_rows > 0) {
         if($post_mark>=1.0&&$post_mark<=6.0) {
-            $sql_add_final = $con->prepare("INSERT INTO marks (exam, username, class, subject, mark, weight) VALUES (?, ?, ?, ?, ?, ?)");
+            $sql_add_final = $con->prepare("INSERT IGNORE INTO marks (exam, username, class, subject, mark, weight) VALUES (?, ?, ?, ?, ?, ?)");
             $sql_add_final->bind_param("ssssss", $post_exam, $_SESSION["username"], $_SESSION["class"], $post_subject, $post_mark, $weight);
             $sql_add_final->execute();
+            header("Location: marks.php");
         } else {
             echo "NEIN2";
         }
@@ -58,6 +59,9 @@ while($row = $result->fetch_assoc()) {
     $sql_exam_select->execute();
     $exam_list = $sql_exam_select->get_result();
     $sql_exam_select->close();
+    //Diagram Variables
+    $dia_labels = "[";
+    $dia_data = "[";
     //Loop through exams
     while($exam_single = $exam_list->fetch_assoc()) {
         //SELECT all exams that marks exist for
@@ -73,16 +77,17 @@ while($row = $result->fetch_assoc()) {
             $class_marks=$result_exams["mark"];
             $ranking = array();
             $s_subject = $row["name"];
-            $sql_class = $con->prepare("SELECT mark FROM marks WHERE class = ? AND exam = ? AND subject  = ? AND username <> ?");
+            $sql_class = $con->prepare("SELECT exam, mark FROM marks WHERE class = ? AND exam = ? AND subject  = ? AND username <> ?");
             $sql_class->bind_param("ssss", $_SESSION["class"], $exam_single["name"], $s_subject, $_SESSION["username"]);
             $sql_class->execute();
             $sql_class_result=$sql_class->get_result();
+            
             while($class_element = $sql_class_result->fetch_assoc()){
                 $class_count++;
                 $class_marks+=$class_element["mark"];
                 $ranking[] = $class_element["mark"];
+
             }
-            
             $class_avg = round($class_marks/$class_count, 2);
             $pos_in_class=getRank($ranking, $result_exams["mark"]);
             $sql_class->close();
@@ -94,12 +99,16 @@ while($row = $result->fetch_assoc()) {
                     <td>$pos_in_class/{$class_count}</td>
                 </tr>
             EOT;
+            $dia_labels.="'{$result_exams["exam"]}', ";
+            $dia_data.="'{$result_exams["mark"]}', ";
         } else {
             
             $add_select .= "<option value=\"{$exam_single["name"]}\">{$exam_single["name"]}</option>";
         }
-        
         }
+        //Diagram end
+        $dia_labels.="]";
+        $dia_data.="]";
 
     $avg_final=($avg_count>0) ? (round($avg/$avg_count, 2)) : ("?");
     $mark_table=($mark_table!="") ? ($mark_table) : ("<td colspan=\"4\"><i>No marks set yet.</i></td>");
@@ -147,17 +156,22 @@ while($row = $result->fetch_assoc()) {
             <script>
             Chart.defaults.global.legend.display = false;
             var ctx = document.getElementById('{$row['name']}').getContext('2d');
-            var myChart = new Chart(ctx, {
+            var {$row['name']} = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Binomische Formeln', 'Chemie Test 2', 'Französisch Habitat', 'Französisch mündlich', 'Englisch Stories', 'Deutsch Aufsatz'],
+                    labels: $dia_labels,
                     datasets: [{
                         label: 'Note',
-                        data: [1.9, 3.8, 2.8, 3.9, 4.8, 6]
+                        data: $dia_data
                     }]
                 },
                 options: {
-                scales:{ xAxes: [{ display: false }] },     
+                scales:{ xAxes: [{ display: false }], 
+                yAxes : [{ 
+                    ticks: {
+                        max: 6
+                    },
+                }] },   
             }});
             </script>
         </div>
