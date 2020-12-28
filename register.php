@@ -55,7 +55,7 @@ die();
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="js/script.js"></script>
     <title><?=$config_name?> | <?=$lang['register']?></title>
 </head>
 <body>
