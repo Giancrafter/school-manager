@@ -33,8 +33,13 @@ $lang['mark_history'] = "Notenverlauf";
 $lang['save'] = 'Speichern';
 $lang['class'] = 'Klasse';
 $lang['account-change'] = 'Falls du diese Einstellungen bearbeiten willst, kontaktiere einen Administrator.';
+$lang['select-language'] = 'Sprache auswählen:';
+$lang['select-class'] = 'Klasse auswählen:';
 $lang['language_change_success'] = "Sprache erfolgreich geändert.";
 $lang['language_not_found'] = "Sprache nicht gefunden";
 
-$lang['markdown-notice'] = "Dieses Textfeld kann mit Markdown formattiert werden."
+$lang['markdown-notice'] = "Dieses Textfeld kann mit Markdown formattiert werden.";
+$lang['welcome'] = 'Willkommen';
+$lang['first-setup'] = 'Zuerst müssen wir ein paar Dinge einrichten.';
+$lang['not-yet'] = 'Du bist noch zu früh. Schliesse erst das Tutorial ab.';
 ?>

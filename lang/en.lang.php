@@ -33,8 +33,13 @@ $lang['mark_history'] = "Mark history";
 $lang['save'] = 'Save';
 $lang['class'] = 'Class';
 $lang['account-change'] = 'If you want to change any of these settings, please contant an administrator.';
+$lang['select-language'] = 'Select language:';
+$lang['select-class'] = 'Select class:';
 $lang['language_change_success'] = "Language changed successfully.";
 $lang['language_not_found'] = "Language not found";
 
-$lang['markdown-notice'] = "This description can be formatted using Markdown."
+$lang['markdown-notice'] = "This description can be formatted using Markdown.";
+$lang['welcome'] = 'Welcome';
+$lang['first-setup'] = 'First we need to setup some things.';
+$lang['not-yet'] = 'You are too early. Complete the tutorial first.';
 ?>
