@@ -1,8 +1,14 @@
 <?php
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.php');
-	exit;
+	die();
 }
+
+if (!isset( $_SESSION["language"] ) || !isset( $_SESSION["class"] )) {
+    header('Location: welcome.php');
+    die();
+}
+
 
 $uri = $_SERVER['REQUEST_URI'];
 $username = $_SESSION['username'];
