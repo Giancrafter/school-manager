@@ -29,6 +29,7 @@ if ( isset( $_POST["exam"]) && isset( $_POST["mark"])) {
             $sql_add_final->bind_param("ssssss", $post_exam, $_SESSION["username"], $_SESSION["class"], $post_subject, $post_mark, $weight);
             $sql_add_final->execute();
             header("Location: marks.php");
+            die();
         } else {
             echo "NEIN2";
         }
@@ -169,7 +170,8 @@ while($row = $result->fetch_assoc()) {
                 scales:{ xAxes: [{ display: false }], 
                 yAxes : [{ 
                     ticks: {
-                        max: 6
+                        max: 6,
+                        min: 1
                     },
                 }] },   
             }});
