@@ -57,7 +57,7 @@
             <hr>
             <form id="lang"> 
             <div class="uk-margin">
-            <label for="">Select language:</label>
+            <label for=""><?=$lang['select-language']?></label>
                 <select name="language" class="uk-select">
                 <?=$langs?>
                 </select>
