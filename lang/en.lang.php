@@ -26,9 +26,15 @@ $lang['topic'] = "Topic";
 $lang['date'] = "Date";
 $lang['mark_average'] = "Mark average";
 $lang['points'] = "Points";
-$lang['semestre'] = "Semester";
+$lang['semestre'] = "Semestre";
 $lang['bad_marks'] = "Insufficient marks";
 $lang['mark_history'] = "Mark history";
+$lang['okay'] = 'Okay';
+$lang['insufficient'] = 'Insufficient';
+$lang['err-point'] = 'More than 2 minus points';
+$lang['err-avg'] = 'Average insufficient';
+$lang['err-mark'] = 'More than 2 insufficient marks';
+
 
 $lang['save'] = 'Save';
 $lang['class'] = 'Class';

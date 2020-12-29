@@ -1,6 +1,10 @@
 <?php 
 include("config.php"); 
 if (isset($_POST['username'])&&isset($_POST['password'])){
+    //DIE
+    if ($_POST['username'] == "" || $_POST['password'] == ""){
+        die();
+    }
     //Array for the AJAX response   
     $data           = array();
     //Connect to DB
@@ -32,8 +36,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
             
           } else {
                 //Wrong username or password
-                $data['success'] = false;
-                $data['error']  = $lang['login_wrong'];
+
 
           }
       } else {

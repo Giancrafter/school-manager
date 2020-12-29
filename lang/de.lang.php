@@ -29,6 +29,11 @@ $lang['points'] = "Punkte";
 $lang['semestre'] = "Semester";
 $lang['bad_marks'] = "Ungenügende Noten";
 $lang['mark_history'] = "Notenverlauf";
+$lang['okay'] = 'Genügend';
+$lang['insufficient'] = 'Ungenügend';
+$lang['err-point'] = 'Mehr als 2 Minuspunkte';
+$lang['err-avg'] = 'Durchschnitt ungenügend';
+$lang['err-mark'] = 'Mehr als 2 ungenügende Noten';
 
 $lang['save'] = 'Speichern';
 $lang['class'] = 'Klasse';

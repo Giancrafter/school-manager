@@ -1,6 +1,10 @@
 <?php 
 include("config.php"); 
 if (isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['password_re'])){
+    //DIE
+    if ($_POST['username'] == "" || $_POST['password'] == ""){
+        die();
+    }
     //Array for the AJAX response   
     $data           = array();
     //Connect to db
@@ -59,6 +63,7 @@ die();
     <title><?=$config_name?> | <?=$lang['register']?></title>
 </head>
 <body>
+<script>UIkit.modal.alert('SchoolManager Beta v.0.1 // Please keep in mind that stored data may be deleted  in developement. Have fun!');</script>
     <div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport>
         <div class="uk-width-1-1">
             <div class="uk-container">
