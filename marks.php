@@ -12,51 +12,18 @@ while ($g_value <= $g_array[$position]) {
 }
 return $position+1;
 }
-//Add Mark
-if ( isset( $_POST["exam"]) && isset( $_POST["mark"])) {
-    $post_exam = $con->real_escape_string($_POST['exam']);
-    $post_mark = $con->real_escape_string($_POST['mark']);
-    $post_subject = $con->real_escape_string($_POST['subject']);
-    //Default weight
-    $weight=1.0;
-    $sql_add = $con->prepare("SELECT * FROM exams WHERE name = ? AND subject = ?");
-    $sql_add->bind_param("ss", $post_exam, $post_subject);
-    $sql_add->execute();
-    $sql_add->store_result();
-    if ($sql_add->num_rows > 0) {
-        if($post_mark>=1.0&&$post_mark<=6.0) {
-            $sql_add_final = $con->prepare("INSERT IGNORE INTO marks (exam, username, class, subject, mark, weight) VALUES (?, ?, ?, ?, ?, ?)");
-            $sql_add_final->bind_param("ssssss", $post_exam, $_SESSION["username"], $_SESSION["class"], $post_subject, $post_mark, $weight);
-            $sql_add_final->execute();
-            header("Location: marks.php");
-            die();
-        } else {
-            echo "NEIN2";
-        }
-    } else {
-        echo "NEIN";
-    }
-}
-//SELECT all subjects
-$sql_subject_select = $con->prepare("SELECT name FROM subjects");
-$sql_subject_select->execute();
-$result = $sql_subject_select->get_result();
-$sql_subject_select->close();
-$marks="";
-//Loop through all Subjects
 
-
-while($row = $result->fetch_assoc()) {
+function generateRow($subject) {
+    global $lang;
+    global $con;
     //Set Select and Mark variables
     $add_select = "";
     $mark_table = "";
-
     $avg_count=0;
     $avg=0;
     //Get a list of all exams
-    
     $sql_exam_select = $con->prepare("SELECT name FROM exams WHERE subject = ? AND class = ?");
-    $sql_exam_select->bind_param("ss", $row["name"], $_SESSION["class"]);
+    $sql_exam_select->bind_param("ss", $subject, $_SESSION["class"]);
     $sql_exam_select->execute();
     $exam_list = $sql_exam_select->get_result();
     $sql_exam_select->close();
@@ -67,9 +34,10 @@ while($row = $result->fetch_assoc()) {
     while($exam_single = $exam_list->fetch_assoc()) {
         //SELECT all exams that marks exist for
         $sql_mark_exam = $con->prepare("SELECT * FROM marks WHERE exam = ? AND subject = ? AND username = ?");
-        $sql_mark_exam->bind_param("sss", $exam_single["name"], $row["name"], $_SESSION["username"]);
+        $sql_mark_exam->bind_param("sss", $exam_single["name"], $subject, $_SESSION["username"]);
         $sql_mark_exam->execute();
         $result_exams = $sql_mark_exam->get_result()->fetch_assoc();
+        $sql_mark_exam->close();
         //Check if mark of the exam has already been set
         if (count($result_exams) > 0) {
             $avg_count++;
@@ -77,7 +45,7 @@ while($row = $result->fetch_assoc()) {
             $class_count=1;
             $class_marks=$result_exams["mark"];
             $ranking = array();
-            $s_subject = $row["name"];
+            $s_subject = $subject;
             $sql_class = $con->prepare("SELECT exam, mark FROM marks WHERE class = ? AND exam = ? AND subject  = ? AND username <> ?");
             $sql_class->bind_param("ssss", $_SESSION["class"], $exam_single["name"], $s_subject, $_SESSION["username"]);
             $sql_class->execute();
@@ -113,9 +81,8 @@ while($row = $result->fetch_assoc()) {
 
     $avg_final=($avg_count>0) ? (round($avg/$avg_count, 2)) : ("?");
     $mark_table=($mark_table!="") ? ($mark_table) : ("<td colspan=\"4\"><i>No marks set yet.</i></td>");
-    $marks.= <<< EOT
-    <li>
-    <a class="uk-accordion-title"><span class="uk-align-left">{$row['name']}</span><span class="uk-align-right">{$avg_final}</span></a>
+    $row = <<< EOT
+    <a class="uk-accordion-title"><span class="uk-align-left">{$subject}</span><span class="uk-align-right">{$avg_final}</span></a>
     <div class="uk-accordion-content">
     <div class="uk-flex uk-flex-between uk-flex-wrap uk-flex-wrap-around">
         <div class="uk-card uk-card-default uk-margin-small uk-card-body uk-width-1-1 uk-width-1-2@m">
@@ -131,35 +98,50 @@ while($row = $result->fetch_assoc()) {
                 </tr>
             </thead>
             <tbody>
-               $mark_table
+                $mark_table
             </tbody>
         </table>
         </div>
         </div>
         <div class="uk-card uk-card-default uk-margin-small uk-card-body uk-width-1-1 uk-width-1-2@s uk-width-1-5@m">
         <h3>{$lang['add-mark']}</h3>
-        <form method="POST">
+        <script>
+        $(function () {
+            $('#$subject').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "marks.php",
+                    data: $("#$subject").serialize(),
+                    success: function(html){ 
+                            $('#r_$subject').html(html);
+                    }
+            });
+        }); });
+        </script>
+        <form id="$subject">
         <div class="uk-margin">
-        <label for="">Prüfung auswählen:</label>
+        <label for="">{$lang['select-exam']}:</label>
         <select class="uk-select" required name="exam">
             $add_select
         </select>
+        <a style="font-size:0.8em;" href="exams.php?addnew">{$lang['add-exam']}</a>
         </div>
         <div class="uk-margin">
             <label for="">{$lang['mark']}:</label>
-            <input class="uk-input" type="number"  step="0.01" min="1" max="6" placeholder="1.00" name="mark" required>
+            <input class="uk-input" type="number" step="0.01" min="1" max="6" placeholder="1.00" name="mark" required></input>
         </div>
-        <input type="hidden" name="subject" value="{$row['name']}"></input>
+        <input type="hidden" name="subject" value="{$subject}"></input>
         <button type="submit" class="uk-button uk-button-default uk-button-large">{$lang['save']}</button>
         </form>
         </div>
         <div class="uk-card uk-card-default uk-margin-small uk-card-body uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
         <h3>{$lang['mark_history']}</h3>
-            <canvas width="400" height="200" id="{$row['name']}"></canvas>
+            <canvas width="400" height="200" id="c_{$subject}"></canvas>
             <script>
             Chart.defaults.global.legend.display = false;
-            var ctx = document.getElementById('{$row['name']}').getContext('2d');
-            var {$row['name']} = new Chart(ctx, {
+            var ctx = document.getElementById('c_{$subject}').getContext('2d');
+            var {$subject} = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: $dia_labels,
@@ -181,10 +163,49 @@ while($row = $result->fetch_assoc()) {
         </div>
     </div>
     </div>
-    </li>
     EOT;
+    return $row;
+   
+   }
 
+//Add Mark
+if ( isset( $_POST["exam"], $_POST["mark"])) {
+    $data = array();
+    $post_exam = $con->real_escape_string($_POST['exam']);
+    $post_mark = $con->real_escape_string($_POST['mark']);
+    $post_subject = $con->real_escape_string($_POST['subject']);
+    //Default weight
+    $weight=1.0;
+    $sql_add = $con->prepare("SELECT * FROM exams WHERE name = ? AND subject = ?");
+    $sql_add->bind_param("ss", $post_exam, $post_subject);
+    $sql_add->execute();
+    $sql_add->store_result();
+    if ($sql_add->num_rows > 0) {
+        if($post_mark>=1.0&&$post_mark<=6.0) {
+            $sql_add_final = $con->prepare("INSERT IGNORE INTO marks (exam, username, class, subject, mark, weight) VALUES (?, ?, ?, ?, ?, ?)");
+            $sql_add_final->bind_param("ssssss", $post_exam, $_SESSION["username"], $_SESSION["class"], $post_subject, $post_mark, $weight);
+            $sql_add_final->execute();
+        } else {
+        
+        }
+    } else {
+    }
+    echo generateRow($post_subject);
+    die();
 }
+//SELECT all subjects
+$sql_subject_select = $con->prepare("SELECT name FROM subjects");
+$sql_subject_select->execute();
+$result = $sql_subject_select->get_result();
+$sql_subject_select->close();
+$marks="";
+//Loop through all Subjects
+
+
+while($row = $result->fetch_assoc()) {
+    $marks .= "<li id=\"r_{$row["name"]}\">".generateRow($row["name"])."</li>";
+}
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -205,7 +226,6 @@ while($row = $result->fetch_assoc()) {
     <div class="uk-margin uk-dark">
     <ul uk-accordion>
         <?=$marks?>
-    <hr>
 </ul>
 </div>
 </main>
