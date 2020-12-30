@@ -50,21 +50,21 @@ if ($average_total==0) {
 $average=round($average_total/$average_count,2);
 $avg_color = ($average<4.0) ? "red" : (($average>5.0) ? "green" : "grey");
 
-$semestre = $lang['okay'];
+$semester = $lang['okay'];
 $reasons="";
 if ($average<4.0){
-    $semestre = $lang['insufficient'];  
+    $semester = $lang['insufficient'];  
     $reasons.=$lang['err-avg'].'<br>';
 }
 if ($insufficient>2){
-    $semestre = $lang['insufficient'];  
+    $semester = $lang['insufficient'];  
     $reasons.=$lang['err-mark'].'<br>';
 }
 if ($points<-2){
-    $semestre = $lang['insufficient'];  
+    $semester = $lang['insufficient'];  
     $reasons.=$lang['err-point'].'<br>';
 }
-if($semestre == $lang['insufficient']){
+if($semester == $lang['insufficient']){
     $err_color="red";
 } else {
     $err_color="green";
@@ -120,8 +120,8 @@ if($semestre == $lang['insufficient']){
         </div>
         <div>
             <div class="uk-card uk-card-default uk-card-body">
-                <h3 class="uk-card-title"><?=$lang['semestre']?></h3>
-                <h1><?=$semestre?></h1>
+                <h3 class="uk-card-title"><?=$lang['semester']?></h3>
+                <h1><?=$semester?></h1>
                 <h4 style="color:<?=$err_color?>;"><?=$reasons?></h4>
             </div>
         </div>
