@@ -49,6 +49,7 @@ $lang['add-exam'] = 'Prüfung hinzufügen';
 $lang['add-mark'] = 'Note hinzufügen';
 $lang['exam'] = 'Prüfung';
 $lang['mark'] = 'Note';
+$lang['select-exam'] = 'Prüfung auswählen';
 $lang['class-avg'] = 'ØKlasse';
 $lang['rank'] = 'Rang';
 $lang['markdown-notice'] = "Dieses Textfeld kann mit Markdown formatiert werden.";

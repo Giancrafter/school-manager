@@ -49,6 +49,7 @@ $lang['add-exam'] = 'Add exam';
 $lang['add-mark'] = 'Add mark';
 $lang['exam'] = 'Exam';
 $lang['mark'] = 'Mark';
+$lang['select-exam'] = 'Select exam';
 $lang['class-avg'] = 'ØClass';
 $lang['rank'] = 'Rank';
 $lang['markdown-notice'] = "This description can be formatted using Markdown.";
