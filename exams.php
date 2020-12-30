@@ -69,9 +69,9 @@ foreach ($result as $row) {
 <div id="add-exam" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
         <form method="post">
-        <h2 class="uk-modal-title">Add exam</h2>
+        <h2 class="uk-modal-title"><?=$lang['add-exam']?></h2>
         <div class="uk-margin">
-            <input class="uk-input" type="text" placeholder="Exam name" name="name">
+            <input class="uk-input" type="text" placeholder="<?=$lang['exam'] ?>" name="name">
         </div>
         <div class="uk-margin">
             <select class="uk-select" name="subject">
@@ -79,15 +79,15 @@ foreach ($result as $row) {
             </select>
         </div>
         <div class="uk-margin">
-            <input class="uk-input" type="date" placeholder="Select Date" name="date">
+            <input class="uk-input" type="date" name="date">
         </div>
         <div class="uk-margin">
-            <textarea class="uk-textarea" rows="6" placeholder="Description" name="description"></textarea>
+            <textarea class="uk-textarea" rows="6" placeholder="<?=$lang['description']?>" name="description"></textarea>
             <span style="font-size: 0.75em;"><?=$lang['markdown-notice']?></span>
             
         </div>
-        <button class="uk-button uk-button-secondary" type="submit">Save</button>
-        <button class="uk-modal-close uk-button uk-button-secondary" type="button">Close</button>
+        <button class="uk-button uk-button-secondary" type="submit"><?=$lang['save']?></button>
+        <button class="uk-modal-close uk-button uk-button-secondary" type="button"><?=$lang['close']?></button>
         </form>
     </div>
 </div>

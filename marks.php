@@ -120,13 +120,14 @@ while($row = $result->fetch_assoc()) {
     <div class="uk-flex uk-flex-between uk-flex-wrap uk-flex-wrap-around">
         <div class="uk-card uk-card-default uk-margin-small uk-card-body uk-width-1-1 uk-width-1-2@m">
         <h3>Noten</h3>
+        <div class="uk-overflow-auto">
         <table class="uk-table uk-table-divider">
             <thead>
                 <tr>
-                    <th>Test</th>
-                    <th>Note</th>
-                    <th>Schnitt</th>
-                    <th>Rang</th>
+                    <th>{$lang['exam']}</th>
+                    <th>{$lang['mark']}</th>
+                    <th>{$lang['class-avg']}</th>
+                    <th>{$lang['rank']}</th>
                 </tr>
             </thead>
             <tbody>
@@ -134,8 +135,9 @@ while($row = $result->fetch_assoc()) {
             </tbody>
         </table>
         </div>
+        </div>
         <div class="uk-card uk-card-default uk-margin-small uk-card-body uk-width-1-1 uk-width-1-2@s uk-width-1-5@m">
-        <h3>Note hinzufügen</h3>
+        <h3>{$lang['add-mark']}</h3>
         <form method="POST">
         <div class="uk-margin">
         <label for="">Prüfung auswählen:</label>
@@ -144,15 +146,15 @@ while($row = $result->fetch_assoc()) {
         </select>
         </div>
         <div class="uk-margin">
-            <label for="">Note:</label>
+            <label for="">{$lang['mark']}:</label>
             <input class="uk-input" type="number"  step="0.01" min="1" max="6" placeholder="1.00" name="mark" required>
         </div>
         <input type="hidden" name="subject" value="{$row['name']}"></input>
-        <button type="submit" class="uk-button uk-button-default uk-button-large">Save</button>
+        <button type="submit" class="uk-button uk-button-default uk-button-large">{$lang['save']}</button>
         </form>
         </div>
         <div class="uk-card uk-card-default uk-margin-small uk-card-body uk-width-1-1 uk-width-1-2@s uk-width-1-4@m">
-        <h3>Verlauf</h3>
+        <h3>{$lang['mark_history']}</h3>
             <canvas width="400" height="200" id="{$row['name']}"></canvas>
             <script>
             Chart.defaults.global.legend.display = false;

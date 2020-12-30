@@ -36,13 +36,21 @@ $lang['err-avg'] = 'Durchschnitt ungenügend';
 $lang['err-mark'] = 'Mehr als 2 ungenügende Noten';
 
 $lang['save'] = 'Speichern';
+$lang['close'] = 'Schliessen';
 $lang['class'] = 'Klasse';
+$lang['description'] = 'Beschreibung';
 $lang['account-change'] = 'Falls du diese Einstellungen bearbeiten willst, kontaktiere einen Administrator.';
 $lang['select-language'] = 'Sprache auswählen:';
 $lang['select-class'] = 'Klasse auswählen:';
 $lang['language_change_success'] = "Sprache erfolgreich geändert.";
 $lang['language_not_found'] = "Sprache nicht gefunden";
 
+$lang['add-exam'] = 'Prüfung hinzufügen';
+$lang['add-mark'] = 'Note hinzufügen';
+$lang['exam'] = 'Prüfung';
+$lang['mark'] = 'Note';
+$lang['class-avg'] = 'ØKlasse';
+$lang['rank'] = 'Rang';
 $lang['markdown-notice'] = "Dieses Textfeld kann mit Markdown formatiert werden.";
 $lang['welcome'] = 'Willkommen';
 $lang['first-setup'] = 'Zuerst müssen wir ein paar Dinge einrichten.';
