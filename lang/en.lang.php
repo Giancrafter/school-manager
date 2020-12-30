@@ -38,7 +38,7 @@ $lang['err-mark'] = 'More than 2 insufficient marks';
 
 $lang['save'] = 'Save';
 $lang['class'] = 'Class';
-$lang['account-change'] = 'If you want to change any of these settings, please contant an administrator.';
+$lang['account-change'] = 'If you want to change any of these settings, please contact an administrator.';
 $lang['select-language'] = 'Select language:';
 $lang['select-class'] = 'Select class:';
 $lang['language_change_success'] = "Language changed successfully.";
