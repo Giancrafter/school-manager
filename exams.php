@@ -13,6 +13,9 @@ if (isset($_POST['name'])&&isset($_POST['date'])&&isset($_POST['subject'])&&isse
     $stmt = $con->prepare("INSERT INTO exams (name, subject, description, class, date, user_from) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $e_name, $e_subject, $e_description, $_SESSION['class'], $e_date, $_SESSION['username']);
     $stmt->execute();
+    if (isset($_GET["addnew"])){
+    header("Location: marks.php");
+    }
 }
 //Fetch exams
 if ($stmt = $con->prepare('SELECT id, name, subject, description, date FROM exams WHERE class = ? ORDER BY date DESC')) {
@@ -94,3 +97,8 @@ foreach ($result as $row) {
 <button uk-toggle="target: #add-exam" type="button" class="uk-button uk-button-secondary" style="position: fixed;  bottom:40px; right:40px; border-radius:50px;"><span uk-icon="icon: plus"></span></button>
 </body>
 </html>
+<?php 
+if (isset($_GET["addnew"])){
+    echo ("<script>UIkit.modal(\"#add-exam\").show();</script>");
+}
+?>
