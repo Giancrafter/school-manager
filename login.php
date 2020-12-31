@@ -70,7 +70,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
 </head>
 <body>
     <div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport>
-    <script>UIkit.modal.alert('SchoolManager Beta v.0.2<bR><hr> Changelog: <br> <ul><li>Reload is no longer needed on Mark add</li> <li>Fixed Translation Bug</li><li>Added new translations</li><li>Improved tables on mobile</li><li>Link to add a new exam on the marks page with automatic redirection</li></ul><hr><bR>Thx for testing :)');</script>
+    <script>UIkit.modal.alert('SchoolManager Beta v.0.3<bR><hr> Changelog: <br> <ul><li>The exam creator can remove the exam</li><li>You can remove and edit your exams</li></ul>What doesnt work yet: <ul><li>Semesters arent displayed on the dashboard</li><lI>After editing an exam once, you have to reload the site to edit another one</li><lI>Incorrect points and avg on dashboard</li></ul><hr><bR>Thx for testing :)');</script>
         <div class="uk-width-1-1">
             <div class="uk-container">
                 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
