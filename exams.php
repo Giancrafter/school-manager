@@ -3,7 +3,20 @@ include("config.php");
 include("db_connect.php");
 include("navbar.php");
 include("scripts/Parsedown.php");
-
+//Code for removing exams
+if ( isset($_POST["remove"])){
+    $id = $con->real_escape_string($_POST['id']);
+    $stmt=$con->prepare("SELECT * FROM exams WHERE id = ? AND user_from = ?");
+    $stmt->bind_param("ss", $id, $_SESSION["username"]);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows>0){
+        $stmt=$con->prepare("DELETE FROM exams WHERE id = ?");
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+    }
+    $stmt->close();
+}
 //Code for adding new exams
 if (isset($_POST['name'])&&isset($_POST['date'])&&isset($_POST['subject'])&&isset($_POST['description'])) {
     $e_name = $con->real_escape_string($_POST['name']);
@@ -18,7 +31,7 @@ if (isset($_POST['name'])&&isset($_POST['date'])&&isset($_POST['subject'])&&isse
     }
 }
 //Fetch exams
-if ($stmt = $con->prepare('SELECT id, name, subject, description, date FROM exams WHERE class = ? ORDER BY date DESC')) {
+if ($stmt = $con->prepare('SELECT id, name, subject, description, date, user_from FROM exams WHERE class = ? ORDER BY date DESC')) {
     $stmt->bind_param('s', $_SESSION['class']);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,9 +40,22 @@ while($row = $result->fetch_assoc()) {
     //Do markdown magic
     $Parsedown = new Parsedown();
     $row['description'] = $Parsedown->text(str_replace("\\r","\r",str_replace("\\n","\n",htmlspecialchars ($row['description']))));
+    if ( $_SESSION['language'] == "de" ) {
+        $date = new DateTime($row['date']);
+        $row['date'] = $date->format('d.m.Y');
+    }
+    if ($row['user_from'] == $_SESSION["username"]){
+        $remove = <<<EOT
+            <form method="POST" style="display: inline;">
+                <input type="hidden" name="id" value="{$row['id']}">
+                </input>
+                <button class="" style="color:white; background-color: black; padding:5px; border-radius: 5px;" type="submit" name="remove" uk-icon="icon: close" uk-tooltip="title: {$lang['remove']}; pos: top-left"></button>
+            </form>
+        EOT;
+    } else {$remove="";}
     $exams.= <<<EOT
         <article class="uk-article">
-        <h1 class="uk-article-title"><a class="uk-link-reset" href="">{$row['name']}</a></h1>
+        <h1 class="uk-article-title"><a class="uk-link-reset" href="">{$row['name']}$remove</a></h1>
         <p class="uk-text-lead">{$row['subject']}</p>
         <p>{$row['date']}</p>
         <p>

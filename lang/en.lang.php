@@ -52,6 +52,7 @@ $lang['mark'] = 'Mark';
 $lang['select-exam'] = 'Select exam';
 $lang['class-avg'] = 'ØClass';
 $lang['rank'] = 'Rank';
+$lang['remove'] = 'Remove';
 $lang['markdown-notice'] = "This description can be formatted using Markdown.";
 $lang['welcome'] = 'Welcome';
 $lang['first-setup'] = 'First we need to setup some things.';

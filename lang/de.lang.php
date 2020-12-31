@@ -52,6 +52,7 @@ $lang['mark'] = 'Note';
 $lang['select-exam'] = 'Prüfung auswählen';
 $lang['class-avg'] = 'ØKlasse';
 $lang['rank'] = 'Rang';
+$lang['remove'] = 'Löschen';
 $lang['markdown-notice'] = "Dieses Textfeld kann mit Markdown formatiert werden.";
 $lang['welcome'] = 'Willkommen';
 $lang['first-setup'] = 'Zuerst müssen wir ein paar Dinge einrichten.';
