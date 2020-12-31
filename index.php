@@ -9,6 +9,10 @@ if ($stmt = $con->prepare('SELECT id, name, subject, date FROM exams WHERE class
     $exams = "";
     $stmt->close();
 while($row = $result->fetch_assoc()) {
+    if ( $_SESSION['language'] == "de" ) {
+        $date = new DateTime($row['date']);
+        $row['date'] = $date->format('d.m.Y');
+    }
     $exams.= <<<EOT
         <tr>
         <td><b>{$row['subject']}</b><br>
@@ -132,9 +136,9 @@ if($semester == $lang['insufficient']){
             </div>
         </div>
         <div>
-            <div class="uk-card uk-card-default uk-card-body">
+            <div class="uk-card uk-card-default uk-card-body ">
                 <h3 class="uk-card-title"><?=$lang['mark_history']?></h3>
-                <canvas id="myChart"></canvas>
+                <canvas id="myChart" style="margin-right: 5px;"></canvas>
 <script>
 Chart.defaults.global.legend.display = false;
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -148,14 +152,21 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
-    scales:{ xAxes: [{ display: false }], 
+    scales:{ xAxes: [{ display: false,  }], 
     yAxes : [{ 
                     ticks: {
                         max: 6,
                         min: 1
                     },
-                }] },     
+                }] },   
+    layout: {padding: { right: 15}}   
 }});
+myChart.options.scales.xAxes[0].display = (document.getElementById('myChart').clientHeight>=200);
+myChart.update();
+$(window).on('resize', function(){
+myChart.options.scales.xAxes[0].display = (document.getElementById('myChart').clientHeight>=200);
+myChart.update();
+});
 </script>
             </div>
         </div>

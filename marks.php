@@ -151,13 +151,14 @@ function generateRow($subject) {
                     }]
                 },
                 options: {
-                scales:{ xAxes: [{ display: false }], 
+                scales:{ xAxes: [{ display: false,  }], 
                 yAxes : [{ 
                     ticks: {
                         max: 6,
                         min: 1
                     },
-                }] },   
+                }] },
+                layout: {padding: { right: 15}}   
             }});
             </script>
         </div>
