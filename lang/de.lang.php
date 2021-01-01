@@ -37,6 +37,7 @@ $lang['err-mark'] = 'Mehr als 2 ungenügende Noten';
 
 $lang['save'] = 'Speichern';
 $lang['close'] = 'Schliessen';
+$lang['done'] = 'Fertig';
 $lang['class'] = 'Klasse';
 $lang['description'] = 'Beschreibung';
 $lang['account-change'] = 'Falls du diese Einstellungen bearbeiten willst, kontaktiere einen Administrator.';
@@ -60,5 +61,15 @@ $lang['edit'] = 'Bearbeiten';
 $lang['markdown-notice'] = "Dieses Textfeld kann mit Markdown formatiert werden.";
 $lang['welcome'] = 'Willkommen';
 $lang['first-setup'] = 'Zuerst müssen wir ein paar Dinge einrichten.';
-$lang['not-yet'] = 'Du bist noch zu früh. Schliesse erst das Tutorial ab.';
+$lang['all-set'] = 'Fertig!';
+$lang['whats-next'] = <<< EOT
+    <h3>Was jetzt?</h3>
+    <ul>
+        <li>Falls eine Prüfung noch nicht existiert, kannst du sie auf der Prüfungen-Seite hinzufügen</li>
+        <li>Auf der Noten-Seite kannst du die Noten, das Gewicht und das Semester für die Prüfungen eintragen.</li>
+        <li>Auf dem Dashboard werden dir alle Durchschnitte und Promotionsinfos angezeigt. Es hat auch ein fancy Diagram, welches deine Noten anzeigt. Um zum Dashboard zu gelangen, klicke den Seitentitel.</li>
+        <li>Bald gibt es noch etwas auf der Anderes-Seite.</li>
+        <li>Du kannst deine Sprache und in Zukunft auch dein Passwort auf der Profil-Seite ändern.</lI>
+    </ul>
+    EOT;
 ?>

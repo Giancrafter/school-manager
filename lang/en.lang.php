@@ -37,6 +37,7 @@ $lang['err-mark'] = 'More than 2 insufficient marks';
 
 $lang['save'] = 'Save';
 $lang['close'] = 'Close';
+$lang['done'] = 'Done';
 $lang['class'] = 'Class';
 $lang['description'] = 'Description';
 $lang['account-change'] = 'If you want to change any of these settings, please contact an administrator.';
@@ -60,5 +61,15 @@ $lang['edit'] = 'Edit';
 $lang['markdown-notice'] = "This description can be formatted using Markdown.";
 $lang['welcome'] = 'Welcome';
 $lang['first-setup'] = 'First we need to setup some things.';
-$lang['not-yet'] = 'You are too early. Complete the tutorial first.';
+$lang['all-set'] = 'You are all set!';
+$lang['whats-next'] = <<< EOT
+    <h3>What's next</h3>
+    <ul>
+        <li>If not existing, add an exam on the exam page</li>
+        <li>On the marks page you can then enter a mark, weight and semester for the exam</li>
+        <li>On the Dashboard, all your averages and promotion status are listed. You will also finde some fancy diagrams. To get back to the Dashboard at any time, click the site title.</li>
+        <li>Soon there will be cool stuff on the other page.</li>
+        <li>You can change your language and in future your password on the account page</lI>
+    </ul>
+    EOT;
 ?>
