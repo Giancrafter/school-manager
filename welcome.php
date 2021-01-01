@@ -7,7 +7,7 @@
 	die();
 }
 
-if ( isset($_SESSION["username"]) && isset( $_SESSION["class"]) ){
+if ( isset($_SESSION["language"]) && isset( $_SESSION["class"]) ){
     header('Location: index.php');
     die();
 }
@@ -50,14 +50,10 @@ if( isset($_POST["language"]) && isset ($_POST["class"])) {
         </head>
         <body>
         <div class="uk-padding">
-            <h1>You are all set!</h1><hr />
-            <h3>How to add my marks</h3>
-            <ol>
-            <li>Tutorial? SOON (tm)
-            </li>
-            </ol>
+            <h1>{$lang["all-set"]}</h1><hr />
+            {$lang["whats-next"]}
             <form>
-            <button class="uk-button uk-button-secondary" type="submit">Done</button>
+            <button class="uk-button uk-button-secondary" type="submit">{$lang["done"]}</button>
             </form>
             </div>  
         </body>
