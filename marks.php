@@ -52,6 +52,7 @@ function generateRow($subject) {
     global $semesters;
     global $class_start;
     global $currentSemester;
+    $request_id = uniqid();
     //Set Select and Mark variables
     $add_select = "";
     $mark_table = "";
@@ -76,8 +77,9 @@ function generateRow($subject) {
         $sql_mark_exam->close();
         //Check if mark of the exam has already been set
         if (count($result_exams) > 0) {
-            $avg_count++;
-            $avg+=$result_exams["mark"];
+            if ($result_exams["semester"] == $currentSemester){
+            $avg_count+=$result_exams["weight"];
+            $avg+=$result_exams["mark"]*$result_exams["weight"];}
             $class_count=1;
             $class_marks=$result_exams["mark"];
             $ranking = array();
@@ -99,6 +101,7 @@ function generateRow($subject) {
             
             //Semester Select
             $sme = $class_start;
+            $semester_select = "";
             for ($q = 1; $q <= $semesters; $q++){
                 if($sme==$currentSemester) {$selected="selected";} else {$selected="";}
                 $semester_select .= "<option value=\"{$sme}\" $selected>{$sme}</option>";
@@ -111,6 +114,8 @@ function generateRow($subject) {
                     <td>{$result_exams["mark"]}</td>
                     <td>$class_avg</td>
                     <td>$pos_in_class/{$class_count}</td>
+                    <td>{$result_exams["semester"]}</td>
+                    <td>{$result_exams["weight"]}</td>
                     <td>            
                         <form id="{$result_exams["id"]}" style="display: inline;">
                         <input type="hidden" name="id" value="{$result_exams["id"]}"><input type="hidden" name="remove"></input><input type="hidden" name="subject" value="$subject"></input>
@@ -131,9 +136,9 @@ function generateRow($subject) {
                             });
                         }); });
                         </script>
-                        <div id="modal_{$result_exams["id"]}" uk-modal>
+                        <div id="modal_{$result_exams["id"]}_$request_id" uk-modal>
                             <div class="uk-modal-dialog uk-modal-body">
-                                <form id="edit_{$result_exams["id"]}">
+                                <form id="edit_{$result_exams["id"]}_$request_id">
                                 <h2 class="uk-modal-title">{$lang['edit-exam']}</h2>
                                 <div class="uk-margin">
                                     <label>{$lang['exam']}:</label>
@@ -145,7 +150,7 @@ function generateRow($subject) {
                                 </div>
                                 <div class="uk-margin">
                                     <label>{$lang['weight']}:</label>
-                                    <input class="uk-input" type="number" step="0.01" min="1" max="6" placeholder="1.00" name="weight" value="{$result_exams["weight"]}" required></input>
+                                    <input class="uk-input" type="number" step="0.1" min="0" max="10" placeholder="1.0" name="weight" value="{$result_exams["weight"]}" required></input>
                                 </div>
                                 <div class="uk-margin">
                                     <label>{$lang['semester']}:</label>
@@ -154,19 +159,19 @@ function generateRow($subject) {
                                     </select>
                                 </div>
                                 <input type="hidden" name="id" value="{$result_exams["id"]}"><input type="hidden" name="edit"></input><input type="hidden" name="subject" value="$subject"></input>
-                                <button style="margin-bottom: 20px;" type="submit" class="uk-button uk-button-secondary" onclick="UIkit.modal(modal_{$result_exams["id"]}).hide();">{$lang['save']}</button>
+                                <button style="margin-bottom: 20px;" type="submit" class="uk-button uk-button-secondary" onclick="UIkit.modal(modal_{$result_exams["id"]}_$request_id).hide();">{$lang['save']}</button>
                                 <button style="margin-bottom: 20px;" class="uk-modal-close uk-button uk-button-secondary" type="button">{$lang['close']}</button>
                                 </form>
                             </div>
                         </div>
                         <script>
                         $(function () {
-                            $('#edit_{$result_exams["id"]}').on('submit', function (e) {
+                            $('#edit_{$result_exams["id"]}_$request_id').on('submit', function (e) {
                                 e.preventDefault();
                                 $.ajax({
                                     type: "POST",
                                     url: "marks.php",
-                                    data: $("#edit_{$result_exams["id"]}").serialize(),
+                                    data: $("#edit_{$result_exams["id"]}_$request_id").serialize(),
                                     success: function(html){ 
                                             $('#r_$subject').html(html);
                                             
@@ -175,7 +180,7 @@ function generateRow($subject) {
                         }); 
                         });
                         </script>
-                        <button style="color:white; background-color: black; padding:5px; border-radius: 5px;" uk-icon="icon: pencil" onclick="UIkit.modal(modal_{$result_exams["id"]}).show();"  uk-tooltip="title: {$lang['edit']}; pos: top-left"></button>
+                        <button style="color:white; background-color: black; padding:5px; border-radius: 5px;" uk-icon="icon: pencil" onclick="UIkit.modal(modal_{$result_exams["id"]}_$request_id).show();"  uk-tooltip="title: {$lang['edit']}; pos: top-left"></button>
                        
                     </td>
                 </tr>
@@ -208,6 +213,8 @@ function generateRow($subject) {
                     <th>{$lang['mark']}</th>
                     <th>{$lang['class-avg']}</th>
                     <th>{$lang['rank']}</th>
+                    <th>{$lang['semester']}</th>
+                    <th>{$lang['weight']}</th>
                     <th>{$lang['actions']}</th>
                 </tr>
             </thead>
@@ -249,6 +256,10 @@ function generateRow($subject) {
             <label for="">{$lang['mark']}:</label>
             <input class="uk-input" type="number" step="0.01" min="1" max="6" placeholder="1.00" name="mark" required></input>
         </div>
+        <div class="uk-margin">
+            <label>{$lang['weight']}:</label>
+            <input class="uk-input" type="number" step="0.1" min="0" max="10" placeholder="1.0" name="weight" value="{$result_exams["weight"]}" required></input>
+        </div>
         <input type="hidden" name="subject" value="{$subject}"></input>
         <button type="submit" class="uk-button uk-button-default uk-button-large">{$lang['save']}</button>
         </form>
@@ -265,7 +276,12 @@ function generateRow($subject) {
                     labels: $dia_labels,
                     datasets: [{
                         label: 'Note',
-                        data: $dia_data
+                        data: $dia_data,
+                        trendlineLinear: {
+                            style: "rgb(0, 0, 0, 0.4)",
+                            lineStyle: "dotted",
+                            width: 1
+                        },
                     }]
                 },
                 options: {
@@ -276,7 +292,13 @@ function generateRow($subject) {
                         min: 1
                     },
                 }] },
-                layout: {padding: { right: 15}}   
+                layout: {padding: { right: 15}},
+                responsive: true,
+                tooltips: {
+                  backgroundColor: 'rgba(0, 0, 0, 1)',
+                  intersect: false,
+                  displayColors: false,
+                },
             }});
             </script>
         </div>
@@ -288,13 +310,13 @@ function generateRow($subject) {
    }
 
 //Add Mark
-if ( isset( $_POST["exam"], $_POST["mark"], $_POST["subject"], $_POST["semester"])) {
+if ( isset( $_POST["exam"], $_POST["mark"], $_POST["subject"], $_POST["semester"], $_POST["weight"])) {
     $post_exam = $con->real_escape_string($_POST['exam']);
     $post_mark = $con->real_escape_string($_POST['mark']);
     $post_subject = $con->real_escape_string($_POST['subject']);
+    $post_weight = $con->real_escape_string($_POST['weight']);
     $post_semester = $con->real_escape_string($_POST['semester']);
-    //Default weight
-    $weight=1.0;
+
     $sql_add = $con->prepare("SELECT * FROM exams WHERE name = ? AND subject = ?");
     $sql_add->bind_param("ss", $post_exam, $post_subject);
     $sql_add->execute();
@@ -302,7 +324,7 @@ if ( isset( $_POST["exam"], $_POST["mark"], $_POST["subject"], $_POST["semester"
     if ($sql_add->num_rows > 0) {
         if($post_mark>=1.0&&$post_mark<=6.0) {
             $sql_add_final = $con->prepare("INSERT IGNORE INTO marks (exam, username, class, subject, mark, weight, semester) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $sql_add_final->bind_param("sssssss", $post_exam, $_SESSION["username"], $_SESSION["class"], $post_subject, $post_mark, $weight, $post_semester);
+            $sql_add_final->bind_param("sssssss", $post_exam, $_SESSION["username"], $_SESSION["class"], $post_subject, $post_mark, $post_weight, $post_semester);
             $sql_add_final->execute();
         } else {
         
