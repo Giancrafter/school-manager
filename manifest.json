@@ -1,0 +1,15 @@
+{
+    "name": "SchoolManager",
+    "short_name": "SchoolManager",
+    "theme_color": "#a9aeb1",
+    "background_color": "#eeeeee",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/index.php",
+    "icons": [
+      {
+        "src": "/img/logo_512.png",
+        "type": "image/png", "sizes": "512x512"
+      }
+    ]
+  }

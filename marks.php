@@ -384,8 +384,14 @@ while($row = $result->fetch_assoc()) {
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/chart.js"></script>
+    
     <title><?=$config_name?> | <?=$lang['marks']?></title>
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="manifest" href="manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="img/logo_512.png" />
+
+    <meta name="theme-color" content="#fdfdfd" />
 </head>
 <body>
     <?=$navbar?>

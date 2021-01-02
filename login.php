@@ -66,7 +66,13 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/script.js"></script>
+    
     <title><?=$config_name?> | <?=$lang['login']?></title>
+    <link rel="manifest" href="manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="img/logo_512.png" />
+
+    <meta name="theme-color" content="#fdfdfd" />
 </head>
 <body>
     <div class="uk-section uk-section-muted uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport>

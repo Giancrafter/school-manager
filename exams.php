@@ -40,6 +40,9 @@ while($row = $result->fetch_assoc()) {
     //Do markdown magic
     $Parsedown = new Parsedown();
     $row['description'] = $Parsedown->text(str_replace("\\r","\r",str_replace("\\n","\n",htmlspecialchars ($row['description']))));
+    $row['name'] = htmlspecialchars($row['name']);
+    $row['subject'] = htmlspecialchars($row['subject']);
+    $row['date'] = htmlspecialchars($row['date']);
     if ( $_SESSION['language'] == "de" ) {
         $date = new DateTime($row['date']);
         $row['date'] = $date->format('d.m.Y');
@@ -85,8 +88,14 @@ foreach ($result as $row) {
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
+    
     <title><?=$config_name?> | <?=$lang['exams']?></title>
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="manifest" href="manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="img/logo_512.png" />
+
+    <meta name="theme-color" content="#fdfdfd" />
 </head>
 <body>
     <?=$navbar?>

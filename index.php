@@ -153,6 +153,13 @@ $dia_data.="'{$row["mark"]}', ";
     <script src="js/chart.js"></script>
     <title><?=$config_name?> | <?=$lang['home']?></title>
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="manifest" href="manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="img/logo_512.png" />
+    <link rel="apple-touch-startup-image" 
+media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+href="/img/logo_512.png" />
+    <meta name="theme-color" content="#fdfdfd" />
 </head>
 <body>
     <?=$navbar?>
