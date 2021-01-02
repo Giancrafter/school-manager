@@ -45,6 +45,7 @@ $lang['select-language'] = 'Select language:';
 $lang['select-class'] = 'Select class:';
 $lang['language_change_success'] = "Language changed successfully.";
 $lang['language_not_found'] = "Language not found";
+$lang['no-marks'] = 'No marks set yet.';
 
 $lang['add-exam'] = 'Add exam';
 $lang['add-mark'] = 'Add mark';

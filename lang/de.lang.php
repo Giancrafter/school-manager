@@ -45,6 +45,7 @@ $lang['select-language'] = 'Sprache auswählen:';
 $lang['select-class'] = 'Klasse auswählen:';
 $lang['language_change_success'] = "Sprache erfolgreich geändert.";
 $lang['language_not_found'] = "Sprache nicht gefunden";
+$lang['no-marks'] = 'Bis jetzt keine Noten gesetzt.';
 
 $lang['add-exam'] = 'Prüfung hinzufügen';
 $lang['add-mark'] = 'Note hinzufügen';

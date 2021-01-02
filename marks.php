@@ -98,15 +98,6 @@ function generateRow($subject) {
             $class_avg = round($class_marks/$class_count, 2);
             $pos_in_class=getRank($ranking, $result_exams["mark"]);
             $sql_class->close();
-            
-            //Semester Select
-            $sme = $class_start;
-            $semester_select = "";
-            for ($q = 1; $q <= $semesters; $q++){
-                if($sme==$currentSemester) {$selected="selected";} else {$selected="";}
-                $semester_select .= "<option value=\"{$sme}\" $selected>{$sme}</option>";
-                $sme = countUp($sme);
-            }
 
             $mark_table .= <<< EOT
                 <tr> 
@@ -192,13 +183,22 @@ function generateRow($subject) {
             $add_select .= "<option value=\"{$exam_single["name"]}\">{$exam_single["name"]}</option>";
         }
         }
+        //Semester Select
+        $sme = $class_start;
+        $semester_select = "";
+        for ($q = 1; $q <= $semesters; $q++){
+            if($sme==$currentSemester) {$selected="selected";} else {$selected="";}
+            $semester_select .= "<option value=\"{$sme}\" $selected>{$sme}</option>";
+            $sme = countUp($sme);
+        }
+
         //Diagram end
         $dia_labels.="]";
         $dia_data.="]";
 
 
     $avg_final=($avg_count>0) ? (round($avg/$avg_count, 2)) : ("?");
-    $mark_table=($mark_table!="") ? ($mark_table) : ("<td colspan=\"4\"><i>No marks set yet.</i></td>");
+    $mark_table=($mark_table!="") ? ($mark_table) : ("<td colspan=\"7\"><i>{$lang["no-marks"]}</i></td>");
     $row = <<< EOT
     <a class="uk-accordion-title"><span class="uk-align-left">{$subject}</span><span class="uk-align-right">{$avg_final}</span></a>
     <div class="uk-accordion-content">
