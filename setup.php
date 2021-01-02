@@ -72,10 +72,11 @@ ini_set('session.cookie_lifetime', 60 * 60 * 24 * 30);
 setcookie(session_name(),session_id(),time()+2628000);
 ?>
 EOT;
-}
+
 fwrite($file, $content);
 fclose($file);
 header("Location: login.php");
+}
 ?>
 
 <!DOCTYPE html>
