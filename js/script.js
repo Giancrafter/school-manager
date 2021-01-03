@@ -3,7 +3,12 @@ $(function () {
     $('form').on('submit', function (e) {
 
       e.preventDefault();
-        //Do the ajax request
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6Le_Jh8aAAAAACm4hhT30HHj8FRyrbHecMjIHGQL', {action: 'submit'}).then(function(token) {
+        var recaptchaResponse = document.getElementById('recaptchaResponse');
+        recaptchaResponse.value = token;
+
+      //Do the ajax request
       $.ajax({
         type: 'post',
         data: $('form').serialize(),
@@ -28,6 +33,13 @@ $(function () {
         }
 
     });
+
+        });
+      });
+ 
+      
+
+
 
     });
 

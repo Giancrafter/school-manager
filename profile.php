@@ -36,8 +36,6 @@
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/script.js"></script>
-    
     <title><?=$config_name?> | <?=$lang['profile']?></title>
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="manifest" href="manifest.json" />
@@ -75,6 +73,26 @@
         </fieldset>
     </div>
     </main>
+<script>
+$(function () {
 
+$('form').on('submit', function (e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'post',
+    data: $('form').serialize(),
+  })
+  .done(function(data) {
+    data  = JSON.parse(data);
+    if ( ! data.success) {
+            $('#messagebox').html('<div class="uk-alert uk-alert-danger uk-animation-fade">' + data.error + '</div>');
+    } else {
+      setTimeout(function() { window.location.href="index.php"; }, 1200);
+    }
+
+});
+});
+});
+</script>
 </body>
 </html>

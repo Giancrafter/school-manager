@@ -20,6 +20,8 @@ $lang['login_wrong'] = "Wrong username or password.";
 $lang['register_success'] = "Registration successful. You are now logged in.";
 $lang['register_exists'] = "Username already exists.";
 $lang['register_password'] = "Passwords don't match.";
+$lang['username-error'] = 'Only letters, numbers and underscores are allowed.';
+$lang['captcha-error'] = 'Captcha-Validation failed.';
 
 $lang['next_exams'] = "Next exams";
 $lang['topic'] = "Topic";
