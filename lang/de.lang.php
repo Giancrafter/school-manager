@@ -22,6 +22,12 @@ $lang['register_exists'] = "Benutzername existiert bereits.";
 $lang['register_password'] = "Passwörter stimmen nicht überein.";
 $lang['username-error'] = 'Es sind nur Buchstaben, Zahlen und Underscores erlaubt.';
 $lang['captcha-error'] = 'Captcha-Validierung fehlgeschlagen.';
+$lang['wrong-password'] = 'Falsches Passwort';
+$lang['change-password'] = 'Passwort ändern';
+$lang['old-password'] = 'Altes Passwort';
+$lang['new-password'] = 'Neues Passwort';
+$lang['repeat-new-password'] = 'Neues Passwort wiederholen';
+$lang['change-success'] = 'Passwort erfolgreich geändert';
 
 $lang['next_exams'] = "Nächste Prüfungen";
 $lang['topic'] = "Thema";

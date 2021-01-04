@@ -26,6 +26,36 @@
     echo json_encode($data);
     die();
  }
+
+ if(isset( $_POST["old-pw"], $_POST["new-pw"], $_POST["re-new-pw"])) {
+    $data = array();
+    if($_POST["new-pw"] == $_POST["re-new-pw"]) {
+            if ($stmt = $con->prepare('SELECT password FROM users WHERE username = ?')) {
+                $stmt->bind_param('s', $username);
+                $stmt->execute();
+                $stmt->store_result();
+                $stmt->bind_result($password_db);
+                $stmt->fetch();
+                if (password_verify($_POST["old-pw"], $password_db)) {
+                    $stmt = $con->prepare("UPDATE users SET password = ? WHERE username = ?");
+                    $password = password_hash($_POST["new-pw"], PASSWORD_DEFAULT);
+                    $stmt->bind_param("ss", $password, $_SESSION["username"]);
+                    $stmt->execute();
+                    $data['success'] = true;
+                    $data['message'] = $lang['change-success'];
+                } else {
+                    $data['success'] = false;
+                    $data['error']  = $lang['wrong-password'];
+                }
+        }
+} else {
+        $data['success'] = false;
+        $data['error']  = $lang['register_password'];
+ }
+ 
+ echo json_encode($data);
+ die();
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +98,24 @@
             </div>
             <button class="uk-button uk-button-secondary"><?=$lang['save']?></button>
             </form>
+            <hr>
+            <legend class="uk-legend"><?=$lang['change-password']?></legend><br>
+            <form id="pw"> 
+            <div class="uk-margin">
+                <label for=""><?=$lang['old-password']?></label>
+                <input type="password" class="uk-input" name="old-pw"></input>
+            </div>
+            <div class="uk-margin">
+                <label for=""><?=$lang['new-password']?></label>
+                <input type="password" class="uk-input" name="new-pw"></input>
+            </div>
+            <div class="uk-margin">
+                <label for=""><?=$lang['repeat-new-password']?></label>
+                <input type="password" class="uk-input" name="re-new-pw"></input>
+            </div>
+            <button class="uk-button uk-button-secondary"><?=$lang['save']?></button>
+            </form>
+ 
  
 
         </fieldset>
@@ -76,23 +124,42 @@
 <script>
 $(function () {
 
-$('form').on('submit', function (e) {
+$('#lang').on('submit', function (e) {
   e.preventDefault();
   $.ajax({
     type: 'post',
-    data: $('form').serialize(),
+    data: $('#lang').serialize(),
   })
   .done(function(data) {
     data  = JSON.parse(data);
-    if ( ! data.success) {
-            $('#messagebox').html('<div class="uk-alert uk-alert-danger uk-animation-fade">' + data.error + '</div>');
-    } else {
+    if (data.success) {
       setTimeout(function() { window.location.href="index.php"; }, 1200);
     }
 
 });
 });
 });
+$(function () {
+
+$('#pw').on('submit', function (e) {
+    e.preventDefault();
+    $.ajax({
+            type: 'post',
+            data: $('#pw').serialize(),
+
+        })
+        .done(function(data) {
+            console.log(data);
+            data  = JSON.parse(data);
+            if ( ! data.success) {
+                    $('#messagebox').html('<div class="uk-alert uk-alert-danger uk-animation-fade">' + data.error + '</div>');
+            } else {
+            $('#pw').html('<div class="uk-alert uk-alert-success uk-animation-fade">' + data.message + '</div>');
+            setTimeout(function() { window.location.href="logout.php"; }, 1200); }
+            
+    });
+    });
+    });
 </script>
 </body>
 </html>

@@ -22,6 +22,12 @@ $lang['register_exists'] = "Username already exists.";
 $lang['register_password'] = "Passwords don't match.";
 $lang['username-error'] = 'Only letters, numbers and underscores are allowed.';
 $lang['captcha-error'] = 'Captcha-Validation failed.';
+$lang['wrong-password'] = 'Wrong password';
+$lang['change-password'] = 'Change password';
+$lang['old-password'] = 'Old password';
+$lang['new-password'] = 'New p assword';
+$lang['repeat-new-password'] = 'Repeat new password';
+$lang['change-success'] = 'Password change successful.';
 
 $lang['next_exams'] = "Next exams";
 $lang['topic'] = "Topic";

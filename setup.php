@@ -68,7 +68,9 @@ session_start();
 include("language-maps.php");
 
 #PHP Session
+ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 30);
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 30);
+session_start();
 setcookie(session_name(),session_id(),time()+2628000);
 
 #reCaptcha
