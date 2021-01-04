@@ -66,7 +66,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/script.js"></script>
-    
+    <script src="https://www.google.com/recaptcha/api.js?render=<?=$recaptcha_site_key?>"></script>
     <title><?=$config_name?> | <?=$lang['login']?></title>
     <link rel="manifest" href="manifest.json" />
     <!-- ios support -->
@@ -96,6 +96,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
                                         <input class="uk-input uk-form-large" placeholder="<?=$lang['password']?>" type="password" name="password">	
                                     </div>
                                 </div>
+                                <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                                 <div class="uk-margin">
                                     <input type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1" value="<?=$lang['login']?>" name="login"></input>
                                 </div>

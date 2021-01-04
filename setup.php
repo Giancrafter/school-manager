@@ -70,6 +70,10 @@ include("language-maps.php");
 #PHP Session
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 30);
 setcookie(session_name(),session_id(),time()+2628000);
+
+#reCaptcha
+\$recaptcha_site_key = "{$_POST["recaptcha_key"]}";
+\$recaptcha_secret_key = "{$_POST["recaptcha_secret"]}";
 ?>
 EOT;
 
@@ -113,6 +117,12 @@ header("Location: login.php");
 
                 <label for="">MySQL Port</label>
                 <input type="number" name="port" value="3306"></input><br><br>
+
+                <label for="">reCaptcha Key</label>
+                <input type="text" name="recaptcha_key" value=""></input><br><br>
+
+                <label for="">reCaptcha Secret</label>
+                <input type="text" name="recaptcha_secret" value=""></input><br><br>
 
                 <input type="submit" value="Save"></input>
             </form>
