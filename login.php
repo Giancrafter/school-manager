@@ -105,7 +105,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
                                 </div>
                             </form>
                         </div>
-                        <div style="text-align: center; font-size:0.8em;">SchoolManager PreRelease 1</div>
+                        <div style="text-align: center; font-size:0.8em;">v.1.0</div>
                     </div>
                 </div>
             </div>
