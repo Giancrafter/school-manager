@@ -113,9 +113,10 @@
                 <label for=""><?=$lang['repeat-new-password']?></label>
                 <input type="password" class="uk-input" name="re-new-pw"></input>
             </div>
+            <div id="messagebox"></div>
             <button class="uk-button uk-button-secondary"><?=$lang['save']?></button>
             </form>
- 
+
  
 
         </fieldset>

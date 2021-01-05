@@ -35,9 +35,9 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
               $data['message'] = $lang['login_success'];
             
           } else {
-                //Wrong username or password
-
-
+                //Wrong username or password    
+                $data['success'] = false;
+                $data['error']  = $lang['login_wrong'];
           }
       } else {
             //Wrong username or password
