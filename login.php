@@ -1,5 +1,6 @@
 <?php 
 include("config.php"); 
+include("db_connect.php"); 
 if (isset($_POST['username'])&&isset($_POST['password'])){
     //DIE
     if ($_POST['username'] == "" || $_POST['password'] == ""){
@@ -7,20 +8,18 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
     }
     //Array for the AJAX response   
     $data           = array();
-    //Connect to DB
-    include("db_connect.php"); 
     //Read data from POST and escape it
     $username = $con->real_escape_string($_POST['username']);
     $password = $con->real_escape_string($_POST['password']);
 
-    if ($stmt = $con->prepare('SELECT id, password, class, language FROM users WHERE username = ?')) {
+    if ($stmt = $con->prepare('SELECT id, password, class, language, token FROM users WHERE username = ?')) {
         // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
         $stmt->bind_param('s', $username);
         $stmt->execute();
         // Store the result so we can check if the account exists in the database.
         $stmt->store_result();
       if ($stmt->num_rows > 0) {
-          $stmt->bind_result($id, $password_db, $_SESSION['class'], $_SESSION['language']);
+          $stmt->bind_result($id, $password_db, $_SESSION['class'], $_SESSION['language'], $token);
           $stmt->fetch();
           // Account exists, now we verify the password.
           // Note: remewmber to use password_hash in your registration file to store the hashed passwords.
@@ -32,7 +31,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
               $_SESSION['username'] = $_POST['username'];
               $_SESSION['id'] = $id;
               $data['success'] = true;
-              $data['message'] = $lang['login_success'];
+              $data['message'] = $lang['login_success']."<script>localStorage.setItem('token', '{$token}');</script>";
             
           } else {
                 //Wrong username or password    
@@ -53,7 +52,24 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
     die();
 }
 
-
+if (isset($_POST['token'])){
+    $token = $con->real_escape_string($_POST['token']);
+    if ($stmt = $con->prepare('SELECT id, username, class, language FROM users WHERE token = ?')) {
+        // Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
+        $stmt->bind_param('s', $token);
+        $stmt->execute();
+        // Store the result so we can check if the account exists in the database.
+        $stmt->store_result();
+      if ($stmt->num_rows > 0) {
+          $stmt->bind_result($_SESSION['id'], $_SESSION['username'], $_SESSION['class'], $_SESSION['language']);
+          $stmt->fetch();
+              session_regenerate_id();
+              $_SESSION['loggedin'] = TRUE;
+              echo "loggedin";    
+      } 
+    }
+    die();
+}
 
 ?>
 <!DOCTYPE html>
@@ -111,5 +127,14 @@ if (isset($_POST['username'])&&isset($_POST['password'])){
             </div>
         </div>
     </div>
+    <script>if(localStorage.getItem('token') !== null){
+        $.post( "login.php", { token: localStorage.getItem('token') })
+        .done(function( data ) {
+            if (data == "loggedin") {
+           window.location.href="index.php";
+        }});
+        };
+
+    </script>
 </body>
 </html>

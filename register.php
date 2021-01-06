@@ -43,10 +43,11 @@ if (isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['password
         $data['error']  = $lang['register_exists'];
         } else {
         // Username doesnt exists, insert new account
-        if ($stmt = $con->prepare('INSERT INTO users (username, password) VALUES (?, ?)')) {
+        if ($stmt = $con->prepare('INSERT INTO users (username, password, token) VALUES (?, ?, ?)')) {
             // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
             $password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->bind_param('ss', $username, $password);
+            $token = bin2hex(random_bytes(40));
+            $stmt->bind_param('sss', $username, $password, $token);
             $stmt->execute();
             session_regenerate_id();
             $_SESSION['loggedin'] = TRUE;
@@ -54,7 +55,7 @@ if (isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['password
             $_SESSION['id'] = $conn->insert_id;
             //User created
             $data['success'] = true;
-            $data['message'] = $lang['register_success'];
+            $data['message'] = $lang['register_success']."<script>localStorage.setItem('token', '{$token}');</script>";
 }}}}
 }  else {
     $data['success'] = false;

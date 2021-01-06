@@ -37,9 +37,10 @@
                 $stmt->bind_result($password_db);
                 $stmt->fetch();
                 if (password_verify($_POST["old-pw"], $password_db)) {
-                    $stmt = $con->prepare("UPDATE users SET password = ? WHERE username = ?");
+                    $stmt = $con->prepare("UPDATE users SET password = ?, token = ? WHERE username = ?");
                     $password = password_hash($_POST["new-pw"], PASSWORD_DEFAULT);
-                    $stmt->bind_param("ss", $password, $_SESSION["username"]);
+                    $token = bin2hex(random_bytes(40));
+                    $stmt->bind_param("sss", $password, $token, $_SESSION["username"]);
                     $stmt->execute();
                     $data['success'] = true;
                     $data['message'] = $lang['change-success'];
